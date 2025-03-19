@@ -15,6 +15,10 @@ async def submit_idea(idea: IdeaBase):
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
 
+        # Check if the user is an admin
+        if user["user_type"] == "admin":
+            raise HTTPException(status_code=403, detail="Admin users are not allowed to submit ideas")
+
         # Prepare the idea document
         idea_dict = idea.dict()
         idea_dict["submission_date"] = datetime.now()
@@ -59,8 +63,11 @@ async def get_user_ideas(employee_id: str):
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
 
+
         # Fetch all ideas submitted by the user
         ideas = list(ideas_collection.find({"employee_id": employee_id}))
+        if not ideas:
+            raise HTTPException(status_code=404, detail="User hasn't submitted any ideas")
 
         # Convert MongoDB documents to IdeaResponse schema
         filtered_ideas = []
