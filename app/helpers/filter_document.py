@@ -9,3 +9,19 @@ def filter_user_document(user):
         "user_type": user["user_type"]
     }
     return filtered_user_document
+
+
+def filter_idea_document(idea):
+    filtered_idea_document = {
+                "idea_id": str(idea["_id"]),
+                "employee_id": idea["employee_id"],
+                "title": idea["title"],
+                "description": idea["description"],
+                "category": idea["category"],
+                "impact": idea["impact"],
+                "submission_date": idea["submission_date"],
+                "status": idea["status"],
+                "evaluation_score": idea["evaluation_score"],
+                "comments": idea["comments"]
+            }
+    return filtered_idea_document

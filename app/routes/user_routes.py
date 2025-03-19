@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.db.db_connection import users_collection
 from app.schemas.user_schema import UserBase, UserResponse, AuthRequest
 from app.services.password_service import generate_password, encrypt_password, decrypt_password
-from app.services.email_service import send_email
+from app.services.email_service import send_account_creation_email
 from app.helpers.filter_document import filter_user_document
 
 
@@ -21,7 +21,7 @@ async def add_user(user: UserBase):
         user_dict["password"] = encrypt_password(password)
         result = users_collection.insert_one(user_dict)
 
-        if not send_email(user.email, user.name, password):
+        if not send_account_creation_email(user.email, user.name, password):
             raise HTTPException(status_code=500, detail="Failed to send email")
 
         return {"id": str(result.inserted_id), **user.dict()}

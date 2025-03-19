@@ -4,7 +4,7 @@ class UserBase(BaseModel):
     employee_id: str = Field(min_length=1)
     name: str = Field(min_length=2)
     email: EmailStr
-    user_type: str = Field(pattern="^(admin|non-admin)$")
+    user_type: str = Field(pattern="^(admin|employee)$")
 
     class Config:
         extra = "forbid"  #Not allowing any other params apart from above in request body
