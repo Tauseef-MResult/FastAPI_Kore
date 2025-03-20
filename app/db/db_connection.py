@@ -17,3 +17,4 @@ if client:
     db = client.idea_chatbot
     users_collection = db.users
     ideas_collection = db.ideas
+    counters_collection = db.counters
