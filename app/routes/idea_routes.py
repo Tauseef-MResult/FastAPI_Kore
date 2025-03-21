@@ -83,10 +83,14 @@ async def get_user_ideas(employee_id: str):
 
 
 @router.get("/get_all_ideas", response_model=list[IdeaResponse])
-async def get_all_ideas(category: Optional[str] = None):
+async def get_all_ideas(category: Optional[str] = None, status: Optional[str] = None):
     try:
-        # Define the query based on whether a category is provided
-        query = {"category": category} if category else {}
+        # Build query dictionary based on provided parameters
+        query = {}
+        if category:
+            query["category"] = category
+        if status:
+            query["status"] = status
 
         # Fetch all ideas from the database
         ideas = list(ideas_collection.find(query))
