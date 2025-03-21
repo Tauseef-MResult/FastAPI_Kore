@@ -172,7 +172,7 @@ async def evaluate_idea(evaluation: EvaluationBase):
         )
 
         if not update_result:
-            raise HTTPException(status_code=404, detail="Failed to update idea table")
+            raise HTTPException(status_code=404, detail="Failed to update user ideas table")
 
         # Fetch the idea and user details for email notification
         user = users_collection.find_one({"employee_id": idea["employee_id"]})
