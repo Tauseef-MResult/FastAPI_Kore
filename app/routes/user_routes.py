@@ -21,10 +21,14 @@ async def add_user(user: UserBase):
         user_dict["password"] = encrypt_password(password)
         result = users_collection.insert_one(user_dict)
 
+        if not result.inserted_id:
+            raise HTTPException(status_code=500, detail="Failed to insert user details into the database")
+
         if not send_account_creation_email(user.email, user.name, password):
-            raise HTTPException(status_code=500, detail="Failed to send email")
+            raise HTTPException(status_code=500, detail="Failed to send Account Creation Mail")
 
         return {"id": str(result.inserted_id), **user.dict()}
+
 
     except HTTPException as http_ex:
         raise http_ex

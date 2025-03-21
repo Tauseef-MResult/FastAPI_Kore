@@ -1,5 +1,6 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from app.helpers.logger_setup import logger
 import os
 
 uri = os.getenv("MONGO_URI")
@@ -7,9 +8,9 @@ uri = os.getenv("MONGO_URI")
 try:
     client = MongoClient(uri, server_api=ServerApi('1'))
     client.admin.command('ping')
-    print("Connected to MongoDB successfully")
+    logger.info("Connected to MongoDB successfully")
 except Exception as e:
-    print(f"Failed to connect to MongoDB: {e}")
+    logger.error(f"Failed to connect to MongoDB: {e}")
     client = None  # Set to None to prevent unintended usage
 
 
@@ -18,3 +19,4 @@ if client:
     users_collection = db.users
     ideas_collection = db.ideas
     counters_collection = db.counters
+    evaluations_collection = db.evaluations
