@@ -1,14 +1,13 @@
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 from typing import Optional
-from pydantic import ValidationError
 from app.db.db_connection import ideas_collection, users_collection, evaluations_collection
 from app.schemas.idea_schema import IdeaBase, IdeaResponse
 from app.schemas.evaluation_schema import EvaluationBase, EvaluationResponse
 from app.services.email_service import send_idea_submission_email, send_evaluation_notification
 from app.helpers.filter_document import filter_idea_document, filter_idea_documents_list
 from app.helpers.response_validator import validate_and_create_response
-from app.helpers.idea_id_generator import idea_id
+from app.helpers.idea_id_generator import get_idea_id
 
 
 router = APIRouter()
@@ -33,6 +32,7 @@ async def submit_idea(idea: IdeaBase):
 
         # Prepare the idea document
         idea_dict = idea.dict()
+        idea_id = get_idea_id()
         idea_dict["idea_id"] = idea_id
         idea_dict["submission_date"] = datetime.now()
         idea_dict["status"] = "Under Review"
@@ -117,12 +117,6 @@ async def get_all_ideas(category: Optional[str] = None, status: Optional[str] = 
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {e}")
 
 
-def validate_and_create_evaluation_response(response_data: dict) -> EvaluationResponse:
-    """Helper function to validate response data and create an EvaluationResponse object."""
-    try:
-        return EvaluationResponse(**response_data)
-    except ValidationError as e:
-        raise HTTPException(status_code=500, detail=f"Response validation error: {e}")
 
 @router.post("/evaluate_idea", response_model=EvaluationResponse)
 async def evaluate_idea(evaluation: EvaluationBase):
@@ -135,7 +129,7 @@ async def evaluate_idea(evaluation: EvaluationBase):
 
         # Check if idea has been evaluated before
         idea_evaluated = evaluations_collection.find_one({"idea_id": evaluation.idea_id})
-        if idea_evaluated :
+        if idea_evaluated:
             raise HTTPException(status_code=404, detail="Idea has been already evaluated before")
 
         #Check if evaluator id/admin id is valid
