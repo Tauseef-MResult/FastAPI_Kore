@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "66b4e9fa-c8ab-4866-aed5-8f35c520aeab",
+		"name": "Idea_Chatbot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17746568",
+		"_collection_link": "https://interstellar-station-658339.postman.co/workspace/MR-FastAPI_Kore~eef3d7fd-9020-4fd0-bea3-4f320efcbb7c/collection/17746568-66b4e9fa-c8ab-4866-aed5-8f35c520aeab?action=share&source=collection_link&creator=17746568"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "authenticate_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"employee_id\": \"117\",\r\n   \"password\":\"mmOC6T8EnD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/authenticate_user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"authenticate_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"employee_id\": \"117\",\r\n   \"name\": \"Tauseef\",\r\n   \"email\": \"tauseef.ahmed@mresult.com\",\r\n   \"user_type\": \"employee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/add_user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"add_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/delete_user/112",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"delete_user",
+								"112"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user_details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/get_user_details/117",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get_user_details",
+								"117"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ideas",
+			"item": [
+				{
+					"name": "submit_idea",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employee_id\": \"117\",\r\n    \"title\": \"Best Mobile in office for all\",\r\n    \"description\": \"Best Mobile in office for all\",\r\n    \"category\": \"Technology\",\r\n    \"impact\": \"Reduce response time by 150%.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ideas/submit_idea",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ideas",
+								"submit_idea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user_ideas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/ideas/get_user_ideas/119",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ideas",
+								"get_user_ideas",
+								"119"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_ideas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/ideas/get_all_ideas?category=Finance&status=Under Review",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ideas",
+								"get_all_ideas"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Finance"
+								},
+								{
+									"key": "status",
+									"value": "Under Review"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "evaluate_idea",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idea_id\": \"IDEA_6\",\r\n  \"evaluator_id\": \"113\",\r\n  \"feasibility_score\": 8.5,\r\n  \"impact_score\": 6.5,\r\n  \"resource_score\": 7.5,\r\n  \"status\": \"Accepted\",\r\n  \"comments\": \"Good\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ideas/evaluate_idea",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ideas",
+								"evaluate_idea"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
